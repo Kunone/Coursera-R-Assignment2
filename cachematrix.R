@@ -3,16 +3,30 @@
 
 ## This function creates a special "matrix" object that can cache its inverse
 ## returned object contains following 4 functions:
-## 1 set(x): assign the real matrix x to this special object. assign NULL to inverse as the matrix changed. After this, user will have to re-cache the inverse.
+## 1 set(x): Assign real matrix x to this special object.
+##           Assign NULL to inverse as the matrix changed. 
+##           After this, user will have to re-cache the inverse.
+##           If parameter is not Matrix, we won't do any change.
 ## 2 get(): return the real matrix.
 ## 3 setinverse(x): used to store inverse. Calculation should be done by cacheSolve function.
 ## 4 getinverse(): return the inverse of the real matrix.
+## Only matrix is allowed to be saved.
 
 makeCacheMatrix <- function(x = matrix()) {
+        if(!is.matrix(x))
+        {
+                message("Please give me a matrix")
+                return()
+        }
         inv <- NULL
         set <- function(y) {
-                x <<- y
-                inv <<- NULL
+                if(!is.matrix(y))
+                        message("Please give me a matrix")
+                else
+                {
+                        x <<- y
+                        inv <<- NULL  
+                }                        
         }
         get <- function() x
         setinverse <- function(inverse) inv <<- inverse
